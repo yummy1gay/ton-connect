@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@ton/crypto": "^3.3.0",
+    "int64-buffer": "^1.0.1",
+    "ton-crypto": "^3.2.0",
+    "tonweb": "^0.0.66",
+    "tonweb-mnemonic": "^1.0.1",
+    "tweetnacl": "^1.0.3",
+    "tweetnacl-util": "^0.15.1"
+  }
+}
