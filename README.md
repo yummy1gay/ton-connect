@@ -46,7 +46,7 @@ A manifest contains metadata about the app. For example:
 }
 ```
 
-In this case, use `https://example.com` as the `<manifest.url>` parameter.
+In this case, use `example.com` as the `<manifest.url>` parameter.
 
 ### Example Code
 
