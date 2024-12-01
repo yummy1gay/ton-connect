@@ -55,7 +55,7 @@ In this case, use `example.com` as the `<manifest.url>` parameter.
    ```python
    from generator import proof
 
-   result = await proof("https://example.com", None)
+   result = await proof("example.com", None)
    print(result)
    ```
 
@@ -64,7 +64,7 @@ In this case, use `example.com` as the `<manifest.url>` parameter.
    ```python
    from generator import proof
 
-   result = await proof("https://example.com", "your-payload", "word1 word2 word3 ... word24")
+   result = await proof("example.com", "your-payload", "word1 word2 word3 ... word24")
    print(result)
    ```
 
