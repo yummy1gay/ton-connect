@@ -1,38 +1,42 @@
 # Ton Connect Wallet Information Generator
 
-This script generates **wallet information** and a **connection proof** required for connect wallets with **Ton Connect**. 
+This Python script generates **wallet information** and a **connection proof** required for connecting wallets with **Ton Connect**.
+
+> README for Node.js available [here](README-js.md)
 
 ## Features
-- Generates a **TON wallet** if no existing seed phrase is provided.
-- Produces a **proof object** to validate wallet ownership for Ton Connect integration.
+- Generates a **TON wallet** if no existing mnemonic is provided.
+- Produces a **proof object** to validate wallet ownership for Ton Connect.
 - Automatically handles manifest data and payloads.
 
 ## Installation
 
 1. Clone the repository or copy the script.
-2. Ensure Node.js is installed (LTS recommended).
+2. Ensure Python 3.10 is installed on your system.
 3. Install the required dependencies:
 
    ```bash
-   npm install
+   pip install -r requirements.txt
    ```
 
 ## Usage
 
-Run the script with the following command:
+Import the `proof` function from the `generator` module and call it:
 
-```bash
-node generator.cjs <manifest.url> <payload> <seed (optional)>
+```python
+from generator import proof
+
+result = await proof(manifest_url="<manifest.url>", payload="<payload>", mnemonic="<mnemonic (optional)>")
 ```
 
 ### Parameters:
-- `<manifest.url>`: URL from the **Ton Connect manifest**, which specifies app's identity and metadata.
-- `<payload>`: Optional payload data. Use `n0t1requ1red` if no payload is required.
-- `<seed (optional)>`: An optional seed phrase (24 words) for an existing wallet. If omitted, a new wallet will be created.
+- `<manifest.url>`: URL from the **Ton Connect manifest**, which specifies the app's identity and metadata.
+- `<payload>`: Optional payload data. Use `None` if no payload is required. If `None` is passed, the payload is excluded from the generated proof.
+- `<mnemonic (optional)>`: An optional mnemonic (24 words) for an existing wallet. If omitted, a new wallet will be created.
 
 ### Example Manifest
 
-A manifest contains metadata about app. For example:
+A manifest contains metadata about the app. For example:
 
 ```json
 {
@@ -44,21 +48,29 @@ A manifest contains metadata about app. For example:
 
 In this case, use `https://example.com` as the `<manifest.url>` parameter.
 
-### Example Commands
+### Example Code
 
-1. **Create a new wallet and generate proof:**
-   ```bash
-   node generator.cjs https://example.com n0t1requ1red
+1. **Create a new wallet and generate proof (with no payload):**
+
+   ```python
+   from generator import proof
+
+   result = await proof("https://example.com", None)
+   print(result)
    ```
 
-2. **Use an existing wallet:**
-   ```bash
-   node generator.cjs https://example.com your-payload "word1 word2 word3 ... word24"
+2. **Use an existing wallet (with a provided payload):**
+
+   ```python
+   from generator import proof
+
+   result = await proof("https://example.com", "your-payload", "word1 word2 word3 ... word24")
+   print(result)
    ```
 
 ## Output
 
-The script generates a JSON object with wallet information and a connection proof. Example:
+The function generates a JSON object with wallet information and a connection proof. Example:
 
 ```json
 {
@@ -94,15 +106,11 @@ The script generates a JSON object with wallet information and a connection proo
   - **state_init**: Initialization data for the wallet.
 
 > [!WARNING]  
-> This tool uses **v3R1 wallet addresses**, which may not be visible by default in some versions of Tonkeeper.  
-> 
-> To access these addresses:  
-> - **Desktop/Web**: Go to **Settings > Current Address** and add all versions.  
-> - **Mobile**: Previous wallet versions can be added during wallet import if they have a balance. Tonkeeper will prompt you to select versions to import.
+> This tool uses **v4R2 wallet addresses**.
 
 ## Dependencies
-- [tweetnacl](https://www.npmjs.com/package/tweetnacl)
-- [tweetnacl-util](https://www.npmjs.com/package/tweetnacl-util)
-- [tonweb](https://www.npmjs.com/package/tonweb)
-- [ton-crypto](https://www.npmjs.com/package/ton-crypto)
-- [int64-buffer](https://www.npmjs.com/package/int64-buffer)
+- [tonsdk](https://pypi.org/project/tonsdk/)
+- [nacl](https://pypi.org/project/pynacl/)
+- [base64](https://docs.python.org/3/library/base64.html)
+- [hashlib](https://docs.python.org/3/library/hashlib.html)
+- [time](https://docs.python.org/3/library/time.html)
